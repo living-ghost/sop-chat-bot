@@ -9,13 +9,21 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from google.colab import userdata
 from openai import AzureOpenAI
-from dotnenv import load_dotenv
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
-# Load environment variables from .env file
-load_dotenv()
+# URL of your Azure Key Vault
+KEYVAULT_URL = "https://test-key-vaultt.vault.azure.net/"
 
+# Authenticate using DefaultAzureCredential
+credential = DefaultAzureCredential()
+kv_client = SecretClient(vault_url=KEYVAULT_URL, credential=credential)
 
-subscription_key=os.environ.get("subscription_key")
+# Fetch secrets
+subscription_key = kv_client.get_secret("subscription-key").value
+api_version = kv_client.get_secret("api-version").value
+azure_endpoint = kv_client.get_secret("azure-endpoint").value
+
 
 client = AzureOpenAI(
     api_version=os.environ.get("api_version"),
