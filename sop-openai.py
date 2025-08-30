@@ -24,14 +24,13 @@ subscription_key = kv_client.get_secret("subscription-key").value
 api_version = kv_client.get_secret("api-version").value
 azure_endpoint = kv_client.get_secret("azure-endpoint").value
 
-
 client = AzureOpenAI(
     api_version=api_version,
     azure_endpoint=azure_endpoint,
     api_key=subscription_key,
 )
 
-MODEL="gpt-5-chat"
+MODEL = "gpt-5-chat"
 
 # 📌 Path to store FAISS index (persistent DB)
 DB_PATH = "faiss_index"
@@ -83,7 +82,6 @@ def process_pdfs(pdf_files):
 
     return db, f"✅ {len(pdf_files)} SOP(s) indexed. Total chunks: {len(docs)}"
 
-
 # 2️⃣ Chat function (retrieval + Azure LLaMA)
 def chat_with_sop(question: str):
     if db is None:
@@ -105,7 +103,6 @@ def chat_with_sop(question: str):
     )
 
     return response.choices[0].message.content
-
 
 # 3️⃣ Gradio UI
 with gr.Blocks(theme=gr.themes.Soft()) as demo:
@@ -163,7 +160,6 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
         """
     )
 
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT"))
+    port = int(os.environ.get("PORT", 8000))  # ✅ default to 8000 if not set
     demo.launch(server_name="0.0.0.0", server_port=port)
