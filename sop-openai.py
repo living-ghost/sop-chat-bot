@@ -26,8 +26,8 @@ azure_endpoint = kv_client.get_secret("azure-endpoint").value
 
 
 client = AzureOpenAI(
-    api_version=os.environ.get("api_version"),
-    azure_endpoint=os.environ.get("azure_endpoint"),
+    api_version=api_version,
+    azure_endpoint=azure_endpoint,
     api_key=subscription_key,
 )
 
