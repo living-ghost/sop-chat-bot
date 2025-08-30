@@ -1,0 +1,5 @@
+.env
+vectorstore
+.gradio
+faiss_index
+venv
