@@ -5,9 +5,8 @@ import os
 import gradio as gr
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
-from langchain.embeddings import HuggingFaceEmbeddings
-from google.colab import userdata
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from openai import AzureOpenAI
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
